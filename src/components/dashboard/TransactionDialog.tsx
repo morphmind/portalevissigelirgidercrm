@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -55,6 +55,18 @@ interface TransactionDialogProps {
   categories: Category[];
 }
 export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, onClose, onSave, transaction, isSaving, categories }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -112,7 +124,22 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
   const description = transaction ? 'Mevcut bir işlemi düzenleyin.' : 'Yeni bir gelir veya gider işlemi ekleyin.';
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[480px] md:max-h-none max-h-[90vh] md:relative fixed bottom-0 left-0 right-0 md:rounded-lg rounded-t-2xl rounded-b-none md:translate-x-0 md:translate-y-0 transform translate-y-0 data-[state=open]:slide-in-from-bottom-full data-[state=closed]:slide-out-to-bottom-full md:data-[state=open]:slide-in-from-left-1/2 md:data-[state=open]:slide-in-from-top-[48%] md:data-[state=closed]:slide-out-to-left-1/2 md:data-[state=closed]:slide-out-to-top-[48%] bg-slate-800 border-2 border-orange-500">
+      <DialogContent
+        className={`bg-slate-800 border-2 border-orange-500 ${
+          isMobile
+            ? 'fixed bottom-0 left-0 right-0 w-full max-h-[90vh] rounded-t-2xl rounded-b-none'
+            : 'sm:max-w-[480px] relative rounded-lg max-h-none'
+        }`}
+        style={isMobile ? {
+          position: 'fixed',
+          bottom: '0',
+          left: '0',
+          right: '0',
+          width: '100%',
+          transform: 'translateX(0) translateY(0)',
+          margin: '0'
+        } : {}}
+      >
         <div className="md:hidden w-12 h-1 bg-orange-500 rounded-full mx-auto mt-2 mb-4"></div>
         <DialogHeader className="md:text-left text-center">
           <DialogTitle className="text-lg font-mono font-bold text-orange-400">{title}</DialogTitle>
