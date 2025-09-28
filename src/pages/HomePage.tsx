@@ -100,9 +100,9 @@ export function HomePage() {
   return (
     <>
       <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <Header onAddTransaction={handleAddTransaction} />
         <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
           <div className="space-y-6">
-            <Header onAddTransaction={handleAddTransaction} />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {isLoadingTransactions ? (
                 Array.from({ length: SKELETON_COUNT }).map((_, i) => <Skeleton key={i} className="h-[108px] w-full" />)
