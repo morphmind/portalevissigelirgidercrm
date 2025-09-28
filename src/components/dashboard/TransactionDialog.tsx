@@ -127,35 +127,41 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
       <DialogContent
         className={`bg-slate-800 border-2 border-orange-500 ${
           isMobile
-            ? 'fixed bottom-0 left-0 right-0 w-full max-h-[90vh] rounded-t-2xl rounded-b-none'
+            ? 'fixed inset-0 w-full h-full rounded-none m-0 p-0'
             : 'sm:max-w-[480px] relative rounded-lg max-h-none'
         }`}
         style={isMobile ? {
           position: 'fixed',
-          bottom: '0',
+          top: '0',
           left: '0',
           right: '0',
-          width: '100%',
-          transform: 'translateX(0) translateY(0)',
-          margin: '0'
+          bottom: '0',
+          width: '100vw',
+          height: '100vh',
+          maxWidth: 'none',
+          maxHeight: 'none',
+          transform: 'none',
+          margin: '0',
+          padding: '0'
         } : {}}
       >
-        <div className="md:hidden w-12 h-1 bg-orange-500 rounded-full mx-auto mt-2 mb-4"></div>
-        <DialogHeader className="md:text-left text-center">
-          <DialogTitle className="text-lg font-mono font-bold text-orange-400">{title}</DialogTitle>
-          <DialogDescription className="text-gray-300 font-mono text-sm">{description}</DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4 max-h-[60vh] md:max-h-none overflow-y-auto">
+        <div className={`${isMobile ? 'h-full flex flex-col p-6' : ''}`}>
+          <div className="md:hidden w-12 h-1 bg-orange-500 rounded-full mx-auto mb-6"></div>
+          <DialogHeader className={`md:text-left text-center ${isMobile ? 'mb-6' : ''}`}>
+            <DialogTitle className="text-xl font-mono font-bold text-orange-400">{title}</DialogTitle>
+            <DialogDescription className="text-gray-300 font-mono text-sm mt-2">{description}</DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={`grid gap-6 ${isMobile ? 'flex-1 overflow-y-auto' : 'py-4 max-h-[60vh] md:max-h-none overflow-y-auto'}`}>
             <FormField
               control={form.control}
               name="type"
               render={({ field }) => (
                 <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Tür</FormLabel>
+                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>Tür</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono">
+                      <SelectTrigger className={`md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono ${isMobile ? 'h-14 text-lg' : ''}`}>
                         <SelectValue placeholder="İşlem türü seçin" />
                       </SelectTrigger>
                     </FormControl>
@@ -173,13 +179,13 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               name="date"
               render={({ field }) => (
                 <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Tarih</FormLabel>
+                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>Tarih</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant={'outline'}
-                          className={cn('md:col-span-3 justify-start text-left font-normal bg-slate-600 border-gray-500 text-white font-mono hover:bg-slate-700', !field.value && 'text-gray-400')}
+                          className={cn(`md:col-span-3 justify-start text-left font-normal bg-slate-600 border-gray-500 text-white font-mono hover:bg-slate-700 ${isMobile ? 'h-14 text-lg' : ''}`, !field.value && 'text-gray-400')}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {field.value ? format(field.value, 'PPP', { locale: tr }) : <span>Tarih seçin</span>}
@@ -263,19 +269,19 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
                 </FormItem>
               )}
             />
-            <DialogFooter className="md:flex-row flex-col gap-2 pt-6 border-t border-gray-600">
+            <DialogFooter className={`${isMobile ? 'flex-col gap-4 pt-6 border-t border-gray-600 mt-6' : 'md:flex-row flex-col gap-2 pt-6 border-t border-gray-600'}`}>
               <Button
                 type="button"
                 variant="outline"
                 onClick={onClose}
-                className="flex-1 md:flex-none bg-slate-600 border-gray-500 text-white font-mono font-bold hover:bg-slate-700"
+                className={`${isMobile ? 'w-full py-4 text-lg' : 'flex-1 md:flex-none'} bg-slate-600 border-gray-500 text-white font-mono font-bold hover:bg-slate-700`}
               >
                 İPTAL
               </Button>
               <Button
                 type="submit"
                 disabled={isSaving}
-                className="flex-1 md:flex-none bg-orange-600 border-orange-500 text-white font-mono font-bold hover:bg-orange-700"
+                className={`${isMobile ? 'w-full py-4 text-lg' : 'flex-1 md:flex-none'} bg-orange-600 border-orange-500 text-white font-mono font-bold hover:bg-orange-700`}
               >
                 {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 KAYDET
@@ -283,6 +289,7 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
             </DialogFooter>
           </form>
         </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
