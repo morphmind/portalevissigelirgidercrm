@@ -122,28 +122,24 @@ export function HomePage() {
                   <SummaryCard
                     title="Villa Gelirleri"
                     value={formatCurrency(summary?.totalIncome ?? 0)}
-                    icon={<ArrowUpRight className="h-6 w-6 text-emerald-500" />}
                     className="text-emerald-600 dark:text-emerald-400"
                     gradient="from-emerald-500 to-green-600"
                   />
                   <SummaryCard
                     title="İşletme Giderleri"
                     value={formatCurrency(summary?.totalExpenses ?? 0)}
-                    icon={<ArrowDownLeft className="h-6 w-6 text-rose-500" />}
                     className="text-rose-600 dark:text-rose-400"
                     gradient="from-rose-500 to-red-600"
                   />
                   <SummaryCard
                     title="Net Kar/Zarar"
                     value={formatCurrency(summary?.netProfit ?? 0)}
-                    icon={<Scale className="h-6 w-6 text-blue-500" />}
                     className={(summary?.netProfit ?? 0) >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}
                     gradient={(summary?.netProfit ?? 0) >= 0 ? "from-emerald-500 to-green-600" : "from-rose-500 to-red-600"}
                   />
                   <SummaryCard
                     title="Mevcut Bakiye"
                     value={formatCurrency(summary?.currentBalance ?? 0)}
-                    icon={<Wallet className="h-6 w-6 text-indigo-500" />}
                     className="text-indigo-600 dark:text-indigo-400"
                     gradient="from-indigo-500 to-purple-600"
                   />
