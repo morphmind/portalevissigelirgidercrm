@@ -8,15 +8,25 @@ interface HeaderProps {
   onAddTransaction: () => void;
 }
 export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
+  console.log('🔥 HEADER COMPONENT RENDERING');
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const navigate = useNavigate();
+  console.log('🔥 Header props - onAddTransaction type:', typeof onAddTransaction);
+  console.log('🔥 Header state - isAuthenticated:', isAuthenticated);
 
   const handleAdminClick = () => {
+    console.log('🔥 ADMIN BUTTON CLICKED - FUNCTION CALLED');
+    console.log('🔥 navigate function exists:', typeof navigate);
+    console.log('🔥 isAuthenticated:', isAuthenticated);
     navigate('/admin');
+    console.log('🔥 navigate called');
   };
 
   const handleAddTransactionClick = () => {
+    console.log('🔥 ADD TRANSACTION BUTTON CLICKED - FUNCTION CALLED');
+    console.log('🔥 onAddTransaction function exists:', typeof onAddTransaction);
     onAddTransaction();
+    console.log('🔥 onAddTransaction called');
   };
 
   return (
@@ -32,7 +42,14 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
           <Button
             type="button"
             variant="outline"
-            onClick={handleAdminClick}
+            onClick={(e) => {
+              console.log('🔥 ADMIN BUTTON DOM EVENT FIRED');
+              console.log('🔥 Event target:', e.target);
+              console.log('🔥 Event type:', e.type);
+              handleAdminClick();
+            }}
+            onMouseDown={() => console.log('🔥 ADMIN BUTTON MOUSEDOWN')}
+            onMouseUp={() => console.log('🔥 ADMIN BUTTON MOUSEUP')}
           >
             <Shield className="mr-2 h-4 w-4" />
             Admin Panel
@@ -40,7 +57,14 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
         )}
         <Button
           type="button"
-          onClick={handleAddTransactionClick}
+          onClick={(e) => {
+            console.log('🔥 ADD TRANSACTION BUTTON DOM EVENT FIRED');
+            console.log('🔥 Event target:', e.target);
+            console.log('🔥 Event type:', e.type);
+            handleAddTransactionClick();
+          }}
+          onMouseDown={() => console.log('🔥 ADD TRANSACTION BUTTON MOUSEDOWN')}
+          onMouseUp={() => console.log('🔥 ADD TRANSACTION BUTTON MOUSEUP')}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           Yeni İşlem Ekle
