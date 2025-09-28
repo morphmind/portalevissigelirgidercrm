@@ -112,31 +112,32 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
   const description = transaction ? 'Mevcut bir işlemi düzenleyin.' : 'Yeni bir gelir veya gider işlemi ekleyin.';
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[480px]">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+      <DialogContent className="sm:max-w-[480px] md:max-h-none max-h-[90vh] md:relative fixed bottom-0 left-0 right-0 md:rounded-lg rounded-t-2xl rounded-b-none md:translate-x-0 md:translate-y-0 transform translate-y-0 data-[state=open]:slide-in-from-bottom-full data-[state=closed]:slide-out-to-bottom-full md:data-[state=open]:slide-in-from-left-1/2 md:data-[state=open]:slide-in-from-top-[48%] md:data-[state=closed]:slide-out-to-left-1/2 md:data-[state=closed]:slide-out-to-top-[48%] bg-slate-800 border-2 border-orange-500">
+        <div className="md:hidden w-12 h-1 bg-orange-500 rounded-full mx-auto mt-2 mb-4"></div>
+        <DialogHeader className="md:text-left text-center">
+          <DialogTitle className="text-lg font-mono font-bold text-orange-400">{title}</DialogTitle>
+          <DialogDescription className="text-gray-300 font-mono text-sm">{description}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4 max-h-[60vh] md:max-h-none overflow-y-auto">
             <FormField
               control={form.control}
               name="type"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel className="text-right">Tür</FormLabel>
+                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
+                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Tür</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="col-span-3">
+                      <SelectTrigger className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono">
                         <SelectValue placeholder="İşlem türü seçin" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="income">Gelir</SelectItem>
-                      <SelectItem value="expense">Gider</SelectItem>
+                    <SelectContent className="bg-slate-700 border-gray-500">
+                      <SelectItem value="income" className="text-white hover:bg-slate-600 font-mono">Gelir</SelectItem>
+                      <SelectItem value="expense" className="text-white hover:bg-slate-600 font-mono">Gider</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage className="col-start-2 col-span-3" />
+                  <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
               )}
             />
@@ -144,25 +145,25 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="date"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel className="text-right">Tarih</FormLabel>
+                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
+                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Tarih</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant={'outline'}
-                          className={cn('col-span-3 justify-start text-left font-normal', !field.value && 'text-muted-foreground')}
+                          className={cn('md:col-span-3 justify-start text-left font-normal bg-slate-600 border-gray-500 text-white font-mono hover:bg-slate-700', !field.value && 'text-gray-400')}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {field.value ? format(field.value, 'PPP', { locale: tr }) : <span>Tarih seçin</span>}
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
+                    <PopoverContent className="w-auto p-0 bg-slate-700 border-gray-500">
                       <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage className="col-start-2 col-span-3" />
+                  <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
               )}
             />
@@ -170,21 +171,21 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="categoryId"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel className="text-right">Kategori</FormLabel>
+                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
+                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Kategori</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="col-span-3">
+                      <SelectTrigger className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono">
                         <SelectValue placeholder="Kategori seçin" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent className="bg-slate-700 border-gray-500">
                       {filteredCategories.map((cat) => (
-                        <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+                        <SelectItem key={cat.id} value={cat.id} className="text-white hover:bg-slate-600 font-mono">{cat.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage className="col-start-2 col-span-3" />
+                  <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
               )}
             />
@@ -192,12 +193,12 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="amount"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel className="text-right">Tutar</FormLabel>
+                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
+                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Tutar</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="0.00" className="col-span-3" {...field} value={field.value ?? ''} />
+                    <Input type="number" placeholder="0.00" className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono placeholder:text-gray-400" {...field} value={field.value ?? ''} />
                   </FormControl>
-                  <FormMessage className="col-start-2 col-span-3" />
+                  <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
               )}
             />
@@ -205,20 +206,20 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="user"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel className="text-right">İşlemi Giren</FormLabel>
+                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
+                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">İşlemi Giren</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="col-span-3">
+                      <SelectTrigger className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono">
                         <SelectValue placeholder="Kim girdi?" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Kaan">Kaan</SelectItem>
-                      <SelectItem value="Sefa">Sefa</SelectItem>
+                    <SelectContent className="bg-slate-700 border-gray-500">
+                      <SelectItem value="Kaan" className="text-white hover:bg-slate-600 font-mono">Kaan</SelectItem>
+                      <SelectItem value="Sefa" className="text-white hover:bg-slate-600 font-mono">Sefa</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage className="col-start-2 col-span-3" />
+                  <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
               )}
             />
@@ -226,20 +227,31 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel className="text-right">Açıklama</FormLabel>
+                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
+                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Açıklama</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="İşlem açıklaması (isteğe bağlı)" className="col-span-3" {...field} value={field.value ?? ''} />
+                    <Textarea placeholder="İşlem açıklaması (isteğe bağlı)" className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono placeholder:text-gray-400" {...field} value={field.value ?? ''} />
                   </FormControl>
-                  <FormMessage className="col-start-2 col-span-3" />
+                  <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
               )}
             />
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>İptal</Button>
-              <Button type="submit" disabled={isSaving}>
+            <DialogFooter className="md:flex-row flex-col gap-2 pt-6 border-t border-gray-600">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                className="flex-1 md:flex-none bg-slate-600 border-gray-500 text-white font-mono font-bold hover:bg-slate-700"
+              >
+                İPTAL
+              </Button>
+              <Button
+                type="submit"
+                disabled={isSaving}
+                className="flex-1 md:flex-none bg-orange-600 border-orange-500 text-white font-mono font-bold hover:bg-orange-700"
+              >
                 {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Kaydet
+                KAYDET
               </Button>
             </DialogFooter>
           </form>
