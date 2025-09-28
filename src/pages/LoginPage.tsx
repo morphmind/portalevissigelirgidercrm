@@ -35,8 +35,8 @@ export function LoginPage() {
     <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-sm shadow-2xl animate-fade-in">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-display">VillaFlow Yönetim</CardTitle>
-          <CardDescription>Yönetim paneline erişmek için şifrenizi girin.</CardDescription>
+          <CardTitle className="text-2xl font-display">PortaLevissi Yönetim</CardTitle>
+          <CardDescription>Admin paneline erişmek için şifrenizi girin.</CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">

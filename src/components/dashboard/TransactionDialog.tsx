@@ -40,6 +40,9 @@ const formSchema = z.object({
     invalid_type_error: "Geçerli bir tutar girin.",
     required_error: "Tutar zorunludur.",
   }).positive("Tutar pozitif bir sayı olmalıdır."),
+  user: z.enum(['Kaan', 'Sefa'], {
+    required_error: "Kullanıcı zorunludur.",
+  }),
   description: z.string().optional(),
 });
 type FormValues = z.infer<typeof formSchema>;
@@ -59,6 +62,7 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
       type: 'expense',
       categoryId: '',
       amount: undefined,
+      user: 'Kaan',
       description: '',
     },
   });
@@ -80,6 +84,7 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
           type: 'expense',
           categoryId: '',
           amount: undefined,
+          user: 'Kaan',
           description: '',
         });
       }
@@ -192,6 +197,27 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
                   <FormControl>
                     <Input type="number" placeholder="0.00" className="col-span-3" {...field} value={field.value ?? ''} />
                   </FormControl>
+                  <FormMessage className="col-start-2 col-span-3" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="user"
+              render={({ field }) => (
+                <FormItem className="grid grid-cols-4 items-center gap-4">
+                  <FormLabel className="text-right">İşlemi Giren</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="col-span-3">
+                        <SelectValue placeholder="Kim girdi?" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Kaan">Kaan</SelectItem>
+                      <SelectItem value="Sefa">Sefa</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage className="col-start-2 col-span-3" />
                 </FormItem>
               )}

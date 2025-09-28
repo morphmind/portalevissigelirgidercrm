@@ -17,6 +17,7 @@ export interface Transaction {
   categoryId: string;
   amount: number;
   description?: string;
+  user: string; // Who entered the transaction (Kaan/Sefa)
   category?: Category; // Populated by the backend
 }
 export type NewTransaction = Omit<Transaction, 'id' | 'category'>;

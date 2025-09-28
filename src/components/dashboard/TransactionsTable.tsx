@@ -74,6 +74,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 dark:text-gray-100">Açıklama</th>
                 <th className="px-4 py-3 text-right text-sm font-medium text-gray-900 dark:text-gray-100">Tutar</th>
                 <th className="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-100">Tür</th>
+                <th className="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-100">Giren</th>
                 <th className="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-gray-100">İşlemler</th>
               </tr>
             </thead>
@@ -103,6 +104,11 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                         : 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300'
                     }`}>
                       {transaction.type === 'income' ? 'Gelir' : 'Gider'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-5 text-center">
+                    <span className="inline-flex px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-md">
+                      {transaction.user || 'Bilinmiyor'}
                     </span>
                   </td>
                   <td className="px-6 py-5 text-center">
@@ -161,6 +167,12 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
               <div className="text-sm">
                 <span className="font-medium text-gray-900 dark:text-gray-100">Açıklama: </span>
                 <span className="text-gray-600 dark:text-gray-400">{transaction.description}</span>
+              </div>
+
+              {/* User */}
+              <div className="text-sm">
+                <span className="font-medium text-gray-900 dark:text-gray-100">İşlemi Giren: </span>
+                <span className="text-gray-600 dark:text-gray-400">{transaction.user || 'Bilinmiyor'}</span>
               </div>
 
               {/* Amount and actions */}
