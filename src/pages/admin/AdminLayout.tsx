@@ -39,7 +39,7 @@ export function AdminLayout() {
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
                 <NavLink to="/admin" className="flex items-center gap-2 text-lg font-semibold mb-4">
-                  <span className="font-display">VillaFlow</span>
+                  <span className="font-display">PortaLevissi</span>
                 </NavLink>
                 {navItems.map((item) => (
                   <NavLink key={item.to} to={item.to} end className={navLinkClasses}>
@@ -67,7 +67,7 @@ export function AdminLayout() {
             <Outlet />
           </main>
           <footer className="text-center py-6 text-muted-foreground/80 border-t">
-            <p>Built with ❤️ at Cloudflare</p>
+            <p>© 2025 PortaLevissi. Tüm hakları saklıdır.</p>
             <p className="mt-2">
               <Link to="/" className="text-sm hover:underline text-primary/80">
                 Ana Sayfaya Dön

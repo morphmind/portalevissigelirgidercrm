@@ -145,14 +145,7 @@ export function HomePage() {
           </div>
         </main>
         <footer className="text-center py-8 text-muted-foreground/80">
-          <p>Built with ❤️ at Cloudflare</p>
-          {isAuthenticated && (
-            <p className="mt-2">
-              <Link to="/admin" className="text-sm hover:underline text-primary/80">
-                Admin Panel
-              </Link>
-            </p>
-          )}
+          <p>© 2025 PortaLevissi. Tüm hakları saklıdır.</p>
         </footer>
       </div>
       <TransactionDialog
