@@ -99,72 +99,89 @@ export function HomePage() {
   }
   return (
     <>
-      <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950">
+      <div className="min-h-screen w-full bg-gray-100 dark:bg-gray-900">
         <Header onAddTransaction={handleAddTransaction} />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Villa Business Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-              Villa Kiralama Yönetimi
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              PortaLevissi villa işletmenizin gelir ve giderlerini profesyonelce yönetin
-            </p>
-          </div>
 
-          {/* Summary Cards Section */}
-          <div className="mb-12">
+        {/* Industrial Header Bar */}
+        <div className="bg-slate-800 dark:bg-gray-950 border-b-4 border-orange-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-white font-mono">
+                  VILLA MANAGEMENT SYSTEM
+                </h1>
+                <p className="text-orange-400 font-mono text-sm mt-1">
+                  OPERATIONAL CONTROL PANEL // STATUS: ACTIVE
+                </p>
+              </div>
+              <div className="text-right">
+                <div className="text-green-400 font-mono text-sm">SYSTEM ONLINE</div>
+                <div className="text-gray-400 font-mono text-xs">ID: PLS-{new Date().getFullYear()}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Financial Metrics Grid */}
+          <div className="mb-8">
+            <div className="bg-slate-800 text-white p-4 border-l-4 border-orange-500 mb-6">
+              <h2 className="text-lg font-bold font-mono">FINANCIAL METRICS</h2>
+              <p className="text-gray-400 font-mono text-sm">Real-time revenue analysis and operational data</p>
+            </div>
+
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
               {isLoadingTransactions ? (
-                Array.from({ length: SKELETON_COUNT }).map((_, i) => <Skeleton key={i} className="h-[140px] w-full rounded-2xl" />)
+                Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                  <div key={i} className="bg-white dark:bg-slate-800 border-2 border-gray-300 dark:border-gray-600 h-32">
+                    <Skeleton className="h-full w-full" />
+                  </div>
+                ))
               ) : (
                 <>
                   <SummaryCard
-                    title="Villa Gelirleri"
+                    title="REVENUE STREAM"
                     value={formatCurrency(summary?.totalIncome ?? 0)}
-                    className="text-emerald-600 dark:text-emerald-400"
-                    gradient="from-emerald-500 to-green-600"
+                    className="text-green-500 dark:text-green-400"
+                    type="income"
                   />
                   <SummaryCard
-                    title="İşletme Giderleri"
+                    title="OPERATIONAL COSTS"
                     value={formatCurrency(summary?.totalExpenses ?? 0)}
-                    className="text-rose-600 dark:text-rose-400"
-                    gradient="from-rose-500 to-red-600"
+                    className="text-red-500 dark:text-red-400"
+                    type="expense"
                   />
                   <SummaryCard
-                    title="Net Kar/Zarar"
+                    title="NET PERFORMANCE"
                     value={formatCurrency(summary?.netProfit ?? 0)}
-                    className={(summary?.netProfit ?? 0) >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}
-                    gradient={(summary?.netProfit ?? 0) >= 0 ? "from-emerald-500 to-green-600" : "from-rose-500 to-red-600"}
+                    className={(summary?.netProfit ?? 0) >= 0 ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'}
+                    type={(summary?.netProfit ?? 0) >= 0 ? 'profit' : 'loss'}
                   />
                   <SummaryCard
-                    title="Mevcut Bakiye"
+                    title="CURRENT BALANCE"
                     value={formatCurrency(summary?.currentBalance ?? 0)}
-                    className="text-indigo-600 dark:text-indigo-400"
-                    gradient="from-indigo-500 to-purple-600"
+                    className="text-blue-500 dark:text-blue-400"
+                    type="balance"
                   />
                 </>
               )}
             </div>
           </div>
 
-          {/* Transactions Section */}
+          {/* Transaction Log Section */}
           <div className="mb-8">
-            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-gray-700/50 shadow-xl">
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    Villa İşlem Geçmişi
-                  </h2>
-                  <div className="h-1 flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full ml-8 max-w-32"></div>
-                </div>
-                <TransactionsTable
-                  transactions={transactions}
-                  isLoading={isLoadingTransactions}
-                  onEdit={handleEditTransaction}
-                  onDelete={handleDeleteTransaction}
-                />
-              </div>
+            <div className="bg-slate-800 text-white p-4 border-l-4 border-orange-500 mb-6">
+              <h2 className="text-lg font-bold font-mono">TRANSACTION LOG</h2>
+              <p className="text-gray-400 font-mono text-sm">Chronological record of all financial operations</p>
+            </div>
+
+            <div className="bg-white dark:bg-slate-800 border-2 border-gray-300 dark:border-gray-600">
+              <TransactionsTable
+                transactions={transactions}
+                isLoading={isLoadingTransactions}
+                onEdit={handleEditTransaction}
+                onDelete={handleDeleteTransaction}
+              />
             </div>
           </div>
         </main>

@@ -10,6 +10,7 @@ const transactionSchema = z.object({
   type: z.enum(['income', 'expense']),
   categoryId: z.string().min(1, 'Category is required'),
   amount: z.number().positive(),
+  user: z.enum(['Kaan', 'Sefa']),
   description: z.string().optional(),
 });
 const categorySchema = z.object({
