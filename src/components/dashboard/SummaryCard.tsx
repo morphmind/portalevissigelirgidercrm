@@ -27,17 +27,17 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ title, value, classNam
   const getStatusText = () => {
     switch (type) {
       case 'income':
-        return 'INCOMING';
+        return 'GELİR';
       case 'expense':
-        return 'OUTGOING';
+        return 'GİDER';
       case 'profit':
-        return 'PROFIT';
+        return 'KAR';
       case 'loss':
-        return 'DEFICIT';
+        return 'ZARAR';
       case 'balance':
-        return 'BALANCE';
+        return 'BAKİYE';
       default:
-        return 'STATUS';
+        return 'DURUM';
     }
   };
 

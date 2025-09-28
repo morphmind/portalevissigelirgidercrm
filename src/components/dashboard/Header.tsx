@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
   };
 
   return (
-    <header className="relative bg-slate-800 dark:bg-gray-950 border-b-2 border-orange-500">
+    <header className="relative bg-slate-800 border-b-2 border-orange-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Brand */}
@@ -81,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-800 dark:bg-gray-950 border-t border-orange-500">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-800 border-t border-orange-500">
             <div className="flex justify-center py-2">
               <ThemeToggle className="relative top-auto right-auto" />
             </div>

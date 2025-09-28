@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowDownLeft, ArrowUpRight, Scale, Wallet } from 'lucide-react';
+import { ArrowDownLeft, ArrowUpRight, Scale, Wallet, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { Header } from '@/components/dashboard/Header';
 import { SummaryCard } from '@/components/dashboard/SummaryCard';
@@ -17,6 +17,7 @@ export function HomePage() {
   const queryClient = useQueryClient();
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const [isMetricsOpen, setIsMetricsOpen] = useState(false);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const { data: transactionsData, isLoading: isLoadingTransactions, isError: isTransactionsError, error: transactionsError } = useQuery<TransactionsApiResponse>({
     queryKey: ['transactions'],
@@ -103,7 +104,7 @@ export function HomePage() {
         <Header onAddTransaction={handleAddTransaction} />
 
         {/* Industrial Header Bar */}
-        <div className="bg-slate-800 dark:bg-gray-950 border-b-4 border-orange-500">
+        <div className="bg-slate-800 border-b-4 border-orange-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex items-center justify-between">
               <div>
@@ -126,11 +127,21 @@ export function HomePage() {
           {/* Financial Metrics Grid */}
           <div className="mb-8">
             <div className="bg-slate-800 text-white p-4 border-l-4 border-orange-500 mb-6">
-              <h2 className="text-lg font-bold font-mono">FINANCIAL METRICS</h2>
-              <p className="text-gray-400 font-mono text-sm">Real-time revenue analysis and operational data</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-bold font-mono">FİNANSAL METRİKLER</h2>
+                  <p className="text-gray-400 font-mono text-sm">Gerçek zamanlı gelir analizi ve operasyonel veri</p>
+                </div>
+                <button
+                  onClick={() => setIsMetricsOpen(!isMetricsOpen)}
+                  className="md:hidden flex items-center px-3 py-2 text-orange-400 hover:text-orange-300 border border-orange-500 hover:bg-slate-700"
+                >
+                  {isMetricsOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                </button>
+              </div>
             </div>
 
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+            <div className={`grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 ${!isMetricsOpen ? 'hidden md:grid' : ''}`}>
               {isLoadingTransactions ? (
                 Array.from({ length: SKELETON_COUNT }).map((_, i) => (
                   <div key={i} className="bg-white dark:bg-slate-800 border-2 border-gray-300 dark:border-gray-600 h-32">
@@ -140,25 +151,25 @@ export function HomePage() {
               ) : (
                 <>
                   <SummaryCard
-                    title="REVENUE STREAM"
+                    title="GELİR AKIŞI"
                     value={formatCurrency(summary?.totalIncome ?? 0)}
                     className="text-green-500 dark:text-green-400"
                     type="income"
                   />
                   <SummaryCard
-                    title="OPERATIONAL COSTS"
+                    title="OPERASYONEL MALİYETLER"
                     value={formatCurrency(summary?.totalExpenses ?? 0)}
                     className="text-red-500 dark:text-red-400"
                     type="expense"
                   />
                   <SummaryCard
-                    title="NET PERFORMANCE"
+                    title="NET PERFORMANS"
                     value={formatCurrency(summary?.netProfit ?? 0)}
                     className={(summary?.netProfit ?? 0) >= 0 ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'}
                     type={(summary?.netProfit ?? 0) >= 0 ? 'profit' : 'loss'}
                   />
                   <SummaryCard
-                    title="CURRENT BALANCE"
+                    title="GÜNCEL BAKİYE"
                     value={formatCurrency(summary?.currentBalance ?? 0)}
                     className="text-blue-500 dark:text-blue-400"
                     type="balance"
@@ -171,8 +182,8 @@ export function HomePage() {
           {/* Transaction Log Section */}
           <div className="mb-8">
             <div className="bg-slate-800 text-white p-4 border-l-4 border-orange-500 mb-6">
-              <h2 className="text-lg font-bold font-mono">TRANSACTION LOG</h2>
-              <p className="text-gray-400 font-mono text-sm">Chronological record of all financial operations</p>
+              <h2 className="text-lg font-bold font-mono">İŞLEM KAYITLARI</h2>
+              <p className="text-gray-400 font-mono text-sm">Tüm finansal operasyonların kronolojik kaydı</p>
             </div>
 
             <div className="bg-white dark:bg-slate-800 border-2 border-gray-300 dark:border-gray-600">

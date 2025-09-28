@@ -68,7 +68,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
       {/* Desktop Table View */}
       <div className="hidden md:block">
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-slate-800 dark:bg-gray-900">
+          <table className="min-w-full bg-slate-800">
             <thead>
               <tr className="border-b-2 border-orange-500">
                 <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">TARİH</th>
@@ -80,10 +80,10 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                 <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">İŞLEMLER</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-600 dark:divide-gray-700">
+            <tbody className="divide-y divide-gray-600">
               {transactions.map((transaction) => (
-                <tr key={transaction.id} className="group hover:bg-slate-700/50 dark:hover:bg-gray-800/50">
-                  <td className="px-4 py-4 text-sm font-mono text-white dark:text-gray-100">
+                <tr key={transaction.id} className="group hover:bg-slate-700/50">
+                  <td className="px-4 py-4 text-sm font-mono text-white">
                     {format(new Date(transaction.date), 'dd.MM.yyyy', { locale: tr })}
                   </td>
                   <td className="px-4 py-4 text-sm">
@@ -91,7 +91,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                       {transaction.category?.name ?? 'DİĞER'}
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 max-w-xs font-mono">
+                  <td className="px-4 py-4 text-sm text-gray-300 max-w-xs font-mono">
                     <div className="truncate">{transaction.description}</div>
                   </td>
                   <td className={`px-4 py-4 text-lg font-bold text-right font-mono ${
@@ -141,7 +141,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
       {/* Mobile Card View */}
       <div className="md:hidden space-y-4">
         {transactions.map((transaction) => (
-          <div key={transaction.id} className="bg-slate-800 dark:bg-gray-900 border-2 border-gray-600 dark:border-gray-700 p-4">
+          <div key={transaction.id} className="bg-slate-800 border-2 border-gray-600 p-4">
             <div className="space-y-3">
               {/* Header with date and type */}
               <div className="flex justify-between items-start border-b border-orange-500 pb-2">
@@ -211,7 +211,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-800 dark:bg-gray-900 border-2 border-orange-500 p-6 max-w-sm w-full">
+          <div className="bg-slate-800 border-2 border-orange-500 p-6 max-w-sm w-full">
             <div className="border-b border-orange-500 pb-3 mb-4">
               <h3 className="text-lg font-mono font-bold text-orange-400">
                 ONAY GEREKLİ
