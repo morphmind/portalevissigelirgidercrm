@@ -71,13 +71,13 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
           <table className="min-w-full bg-slate-800 dark:bg-gray-900">
             <thead>
               <tr className="border-b-2 border-orange-500">
-                <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">DATE</th>
-                <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">CATEGORY</th>
-                <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">DESCRIPTION</th>
-                <th className="px-4 py-4 text-right text-xs font-bold text-orange-400 font-mono tracking-wider">AMOUNT</th>
-                <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">TYPE</th>
-                <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">OPERATOR</th>
-                <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">ACTIONS</th>
+                <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">TARİH</th>
+                <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">KATEGORİ</th>
+                <th className="px-4 py-4 text-left text-xs font-bold text-orange-400 font-mono tracking-wider">AÇIKLAMA</th>
+                <th className="px-4 py-4 text-right text-xs font-bold text-orange-400 font-mono tracking-wider">TUTAR</th>
+                <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">TÜR</th>
+                <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">OPERATÖR</th>
+                <th className="px-4 py-4 text-center text-xs font-bold text-orange-400 font-mono tracking-wider">İŞLEMLER</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-600 dark:divide-gray-700">
@@ -88,7 +88,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                   </td>
                   <td className="px-4 py-4 text-sm">
                     <span className="bg-slate-600 text-white px-2 py-1 text-xs font-mono font-bold border border-gray-500">
-                      {transaction.category?.name ?? 'OTHER'}
+                      {transaction.category?.name ?? 'DİĞER'}
                     </span>
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 max-w-xs font-mono">
@@ -105,12 +105,12 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                         ? 'bg-green-900/30 text-green-300 border-green-500'
                         : 'bg-red-900/30 text-red-300 border-red-500'
                     }`}>
-                      {transaction.type === 'income' ? 'INCOME' : 'EXPENSE'}
+                      {transaction.type === 'income' ? 'GELİR' : 'GİDER'}
                     </span>
                   </td>
                   <td className="px-4 py-4 text-center">
                     <span className="inline-flex px-2 py-1 text-xs font-mono font-bold bg-slate-600 text-white border border-gray-500">
-                      {transaction.user || 'UNKNOWN'}
+                      {transaction.user || 'BİLİNMİYOR'}
                     </span>
                   </td>
                   <td className="px-4 py-4 text-center">
@@ -120,14 +120,14 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                         className="px-3 py-1 text-xs font-mono font-bold text-blue-300 bg-blue-900/30 hover:bg-blue-800/50 border border-blue-500"
                         title="Düzenle"
                       >
-                        EDIT
+                        DÜZENLE
                       </button>
                       <button
                         onClick={() => handleDelete(transaction.id)}
                         className="px-3 py-1 text-xs font-mono font-bold text-red-300 bg-red-900/30 hover:bg-red-800/50 border border-red-500"
                         title="Sil"
                       >
-                        DELETE
+                        SİL
                       </button>
                     </div>
                   </td>
@@ -153,29 +153,29 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                     ? 'bg-green-900/30 text-green-300 border-green-500'
                     : 'bg-red-900/30 text-red-300 border-red-500'
                 }`}>
-                  {transaction.type === 'income' ? 'INCOME' : 'EXPENSE'}
+                  {transaction.type === 'income' ? 'GELİR' : 'GİDER'}
                 </span>
               </div>
 
               {/* Category */}
               <div className="text-sm">
-                <span className="font-mono font-bold text-gray-300">CATEGORY: </span>
+                <span className="font-mono font-bold text-gray-300">KATEGORİ: </span>
                 <span className="bg-slate-600 text-white px-2 py-1 text-xs font-mono font-bold border border-gray-500">
-                  {transaction.category?.name ?? 'OTHER'}
+                  {transaction.category?.name ?? 'DİĞER'}
                 </span>
               </div>
 
               {/* Description */}
               <div className="text-sm">
-                <span className="font-mono font-bold text-gray-300">DESC: </span>
+                <span className="font-mono font-bold text-gray-300">AÇIKLAMA: </span>
                 <span className="text-gray-400 font-mono">{transaction.description}</span>
               </div>
 
               {/* User */}
               <div className="text-sm">
-                <span className="font-mono font-bold text-gray-300">OPERATOR: </span>
+                <span className="font-mono font-bold text-gray-300">OPERATÖR: </span>
                 <span className="bg-slate-600 text-white px-2 py-1 text-xs font-mono font-bold border border-gray-500">
-                  {transaction.user || 'UNKNOWN'}
+                  {transaction.user || 'BİLİNMİYOR'}
                 </span>
               </div>
 
@@ -192,14 +192,14 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
                     className="px-3 py-1 text-xs font-mono font-bold text-blue-300 bg-blue-900/30 hover:bg-blue-800/50 border border-blue-500"
                     title="Düzenle"
                   >
-                    EDIT
+                    DÜZENLE
                   </button>
                   <button
                     onClick={() => handleDelete(transaction.id)}
                     className="px-3 py-1 text-xs font-mono font-bold text-red-300 bg-red-900/30 hover:bg-red-800/50 border border-red-500"
                     title="Sil"
                   >
-                    DELETE
+                    SİL
                   </button>
                 </div>
               </div>
@@ -214,24 +214,24 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ transactio
           <div className="bg-slate-800 dark:bg-gray-900 border-2 border-orange-500 p-6 max-w-sm w-full">
             <div className="border-b border-orange-500 pb-3 mb-4">
               <h3 className="text-lg font-mono font-bold text-orange-400">
-                CONFIRMATION REQUIRED
+                ONAY GEREKLİ
               </h3>
             </div>
             <p className="text-gray-300 font-mono mb-6">
-              This transaction will be permanently deleted. This action cannot be undone.
+              Bu işlem kalıcı olarak silinecektir. Bu eylem geri alınamaz.
             </p>
             <div className="flex space-x-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
                 className="flex-1 px-4 py-2 text-gray-300 bg-slate-600 border border-gray-500 hover:bg-slate-700 font-mono font-bold"
               >
-                CANCEL
+                İPTAL
               </button>
               <button
                 onClick={confirmDelete}
                 className="flex-1 px-4 py-2 text-white bg-red-600 border border-red-500 hover:bg-red-700 font-mono font-bold"
               >
-                DELETE
+                SİL
               </button>
             </div>
           </div>
