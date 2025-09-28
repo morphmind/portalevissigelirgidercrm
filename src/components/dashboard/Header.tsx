@@ -11,17 +11,11 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const navigate = useNavigate();
 
-  const handleAdminClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('Admin button clicked'); // Debug log
+  const handleAdminClick = () => {
     navigate('/admin');
   };
 
-  const handleAddTransactionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('Add transaction button clicked'); // Debug log
+  const handleAddTransactionClick = () => {
     onAddTransaction();
   };
 
@@ -39,7 +33,6 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
             type="button"
             variant="outline"
             onClick={handleAdminClick}
-            className="transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
           >
             <Shield className="mr-2 h-4 w-4" />
             Admin Panel
@@ -48,7 +41,6 @@ export const Header: React.FC<HeaderProps> = ({ onAddTransaction }) => {
         <Button
           type="button"
           onClick={handleAddTransactionClick}
-          className="transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           Yeni İşlem Ekle
