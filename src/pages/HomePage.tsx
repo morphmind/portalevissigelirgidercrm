@@ -99,54 +99,79 @@ export function HomePage() {
   }
   return (
     <>
-      <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950">
         <Header onAddTransaction={handleAddTransaction} />
-        <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-          <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Villa Business Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+              Villa Kiralama Yönetimi
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              PortaLevissi villa işletmenizin gelir ve giderlerini profesyonelce yönetin
+            </p>
+          </div>
+
+          {/* Summary Cards Section */}
+          <div className="mb-12">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
               {isLoadingTransactions ? (
-                Array.from({ length: SKELETON_COUNT }).map((_, i) => <Skeleton key={i} className="h-[108px] w-full" />)
+                Array.from({ length: SKELETON_COUNT }).map((_, i) => <Skeleton key={i} className="h-[140px] w-full rounded-2xl" />)
               ) : (
                 <>
                   <SummaryCard
-                    title="Toplam Gelir"
+                    title="Villa Gelirleri"
                     value={formatCurrency(summary?.totalIncome ?? 0)}
-                    icon={<ArrowUpRight className="h-5 w-5 text-green-500" />}
-                    className="text-green-600"
+                    icon={<ArrowUpRight className="h-6 w-6 text-emerald-500" />}
+                    className="text-emerald-600 dark:text-emerald-400"
+                    gradient="from-emerald-500 to-green-600"
                   />
                   <SummaryCard
-                    title="Toplam Gider"
+                    title="İşletme Giderleri"
                     value={formatCurrency(summary?.totalExpenses ?? 0)}
-                    icon={<ArrowDownLeft className="h-5 w-5 text-red-500" />}
-                    className="text-red-600"
+                    icon={<ArrowDownLeft className="h-6 w-6 text-rose-500" />}
+                    className="text-rose-600 dark:text-rose-400"
+                    gradient="from-rose-500 to-red-600"
                   />
                   <SummaryCard
-                    title="Net Kazanç"
+                    title="Net Kar/Zarar"
                     value={formatCurrency(summary?.netProfit ?? 0)}
-                    icon={<Scale className="h-5 w-5 text-muted-foreground" />}
-                    className={(summary?.netProfit ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'}
+                    icon={<Scale className="h-6 w-6 text-blue-500" />}
+                    className={(summary?.netProfit ?? 0) >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}
+                    gradient={(summary?.netProfit ?? 0) >= 0 ? "from-emerald-500 to-green-600" : "from-rose-500 to-red-600"}
                   />
                   <SummaryCard
-                    title="Güncel Bakiye"
+                    title="Mevcut Bakiye"
                     value={formatCurrency(summary?.currentBalance ?? 0)}
-                    icon={<Wallet className="h-5 w-5 text-muted-foreground" />}
+                    icon={<Wallet className="h-6 w-6 text-indigo-500" />}
+                    className="text-indigo-600 dark:text-indigo-400"
+                    gradient="from-indigo-500 to-purple-600"
                   />
                 </>
               )}
             </div>
-            <div>
-              <TransactionsTable
-                transactions={transactions}
-                isLoading={isLoadingTransactions}
-                onEdit={handleEditTransaction}
-                onDelete={handleDeleteTransaction}
-              />
+          </div>
+
+          {/* Transactions Section */}
+          <div className="mb-8">
+            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-gray-700/50 shadow-xl">
+              <div className="p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    Villa İşlem Geçmişi
+                  </h2>
+                  <div className="h-1 flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full ml-8 max-w-32"></div>
+                </div>
+                <TransactionsTable
+                  transactions={transactions}
+                  isLoading={isLoadingTransactions}
+                  onEdit={handleEditTransaction}
+                  onDelete={handleDeleteTransaction}
+                />
+              </div>
             </div>
           </div>
         </main>
-        <footer className="text-center py-8 text-muted-foreground/80">
-          <p>© 2025 PortaLevissi. Tüm hakları saklıdır.</p>
-        </footer>
       </div>
       <TransactionDialog
         isOpen={isDialogOpen}
