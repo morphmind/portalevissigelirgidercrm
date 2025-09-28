@@ -197,8 +197,10 @@ export abstract class Entity<State> {
 }
 
 // Minimal prefix-based index held in its own DO instance.
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class Index<T extends string> extends Entity<{}> {
   static readonly entityName = "sys-index-root";
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   static readonly initialState: {} = {};
 
   constructor(env: Env, name: string) { super(env, `index:${name}`); }

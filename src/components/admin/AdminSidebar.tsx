@@ -49,7 +49,7 @@ export const AdminSidebar: React.FC = () => {
            <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" className="w-full justify-start gap-3" onClick={() => navigate('/')}>
+                <Button variant="outline" className="w-full justify-start gap-3" onClick={() => navigate('/')}>
                   <Home className="h-4 w-4" />
                   <span className="hidden lg:inline">Ana Sayfaya Dön</span>
                 </Button>
@@ -60,7 +60,7 @@ export const AdminSidebar: React.FC = () => {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" className="w-full justify-start gap-3" onClick={handleLogout}>
+                <Button variant="outline" className="w-full justify-start gap-3" onClick={handleLogout}>
                   <LogOut className="h-4 w-4" />
                   <span className="hidden lg:inline">Çıkış Yap</span>
                 </Button>

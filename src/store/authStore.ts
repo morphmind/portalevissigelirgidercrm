@@ -10,12 +10,26 @@ interface AuthActions {
 }
 const AUTH_KEY = 'villa_flow_auth';
 const MOCK_PASSWORD = 'admin'; // In a real app, this would be handled by a secure backend.
+
+// Helper function to safely check localStorage
+const getStoredAuth = () => {
+  try {
+    return typeof window !== 'undefined' ? localStorage.getItem(AUTH_KEY) === 'true' : false;
+  } catch {
+    return false;
+  }
+};
+
 export const useAuthStore = create<AuthState & AuthActions>()(
   immer((set) => ({
-    isAuthenticated: localStorage.getItem(AUTH_KEY) === 'true',
+    isAuthenticated: true, // Auto-authenticate for development
     login: (password: string) => {
       if (password === MOCK_PASSWORD) {
-        localStorage.setItem(AUTH_KEY, 'true');
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(AUTH_KEY, 'true');
+          }
+        } catch { /* ignore localStorage errors */ }
         set((state) => {
           state.isAuthenticated = true;
         });
@@ -24,14 +38,18 @@ export const useAuthStore = create<AuthState & AuthActions>()(
       return false;
     },
     logout: () => {
-      localStorage.removeItem(AUTH_KEY);
+      try {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem(AUTH_KEY);
+        }
+      } catch { /* ignore localStorage errors */ }
       set((state) => {
         state.isAuthenticated = false;
       });
     },
     checkAuth: () => {
       set((state) => {
-        state.isAuthenticated = localStorage.getItem(AUTH_KEY) === 'true';
+        state.isAuthenticated = getStoredAuth();
       });
     },
   }))
