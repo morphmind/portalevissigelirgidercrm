@@ -128,7 +128,7 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
         className={`bg-slate-800 border-2 border-orange-500 ${
           isMobile
             ? 'fixed inset-0 w-full h-full rounded-none m-0 p-0'
-            : 'sm:max-w-[480px] relative rounded-lg max-h-none'
+            : 'sm:max-w-[480px] max-h-[90vh] rounded-lg'
         }`}
         style={isMobile ? {
           position: 'fixed',
@@ -142,26 +142,34 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
           maxHeight: 'none',
           transform: 'none',
           margin: '0',
-          padding: '0'
-        } : {}}
+          padding: '0',
+          overflow: 'hidden'
+        } : {
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          maxWidth: '480px',
+          maxHeight: '90vh'
+        }}
       >
-        <div className={`${isMobile ? 'h-full flex flex-col p-6' : ''}`}>
-          <div className="md:hidden w-12 h-1 bg-orange-500 rounded-full mx-auto mb-6"></div>
-          <DialogHeader className={`md:text-left text-center ${isMobile ? 'mb-6' : ''}`}>
-            <DialogTitle className="text-xl font-mono font-bold text-orange-400">{title}</DialogTitle>
-            <DialogDescription className="text-gray-300 font-mono text-sm mt-2">{description}</DialogDescription>
+        <div className={`${isMobile ? 'h-full flex flex-col p-4 safe-area-inset' : 'p-6'}`}>
+          {isMobile && <div className="w-12 h-1 bg-orange-500 rounded-full mx-auto mb-4"></div>}
+          <DialogHeader className={`${isMobile ? 'text-center mb-4 flex-shrink-0' : 'text-left mb-4'}`}>
+            <DialogTitle className={`font-mono font-bold text-orange-400 ${isMobile ? 'text-lg' : 'text-xl'}`}>{title}</DialogTitle>
+            <DialogDescription className={`text-gray-300 font-mono mt-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>{description}</DialogDescription>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className={`grid gap-6 ${isMobile ? 'flex-1 overflow-y-auto' : 'py-4 max-h-[60vh] md:max-h-none overflow-y-auto'}`}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={`grid gap-4 ${isMobile ? 'flex-1 overflow-y-auto pb-4' : 'overflow-y-auto gap-6'}`}>
             <FormField
               control={form.control}
               name="type"
               render={({ field }) => (
-                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>Tür</FormLabel>
+                <FormItem className={`${isMobile ? 'space-y-2' : 'md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0'}`}>
+                  <FormLabel className={`font-mono font-bold text-gray-300 ${isMobile ? 'text-base' : 'md:text-right'}`}>Tür</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className={`md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono ${isMobile ? 'h-14 text-lg' : ''}`}>
+                      <SelectTrigger className={`bg-slate-600 border-gray-500 text-white font-mono ${isMobile ? 'h-12 text-base' : 'md:col-span-3 h-10'}`}>
                         <SelectValue placeholder="İşlem türü seçin" />
                       </SelectTrigger>
                     </FormControl>
@@ -178,14 +186,14 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="date"
               render={({ field }) => (
-                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>Tarih</FormLabel>
+                <FormItem className={`${isMobile ? 'space-y-2' : 'md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0'}`}>
+                  <FormLabel className={`font-mono font-bold text-gray-300 ${isMobile ? 'text-base' : 'md:text-right'}`}>Tarih</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant={'outline'}
-                          className={cn(`md:col-span-3 justify-start text-left font-normal bg-slate-600 border-gray-500 text-white font-mono hover:bg-slate-700 ${isMobile ? 'h-14 text-lg' : ''}`, !field.value && 'text-gray-400')}
+                          className={cn(`md:col-span-3 justify-start text-left font-normal bg-slate-600 border-gray-500 text-white font-mono hover:bg-slate-700 ${isMobile ? 'h-14 text-lg' : 'h-10'}`, !field.value && 'text-gray-400')}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {field.value ? format(field.value, 'PPP', { locale: tr }) : <span>Tarih seçin</span>}
@@ -204,11 +212,11 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               control={form.control}
               name="categoryId"
               render={({ field }) => (
-                <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Kategori</FormLabel>
+                <FormItem className={`${isMobile ? 'space-y-2' : 'md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0'}`}>
+                  <FormLabel className={`font-mono font-bold text-gray-300 ${isMobile ? 'text-base' : 'md:text-right'}`}>Kategori</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono">
+                      <SelectTrigger className={`md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono ${isMobile ? 'h-14 text-lg' : 'h-10'}`}>
                         <SelectValue placeholder="Kategori seçin" />
                       </SelectTrigger>
                     </FormControl>
@@ -227,9 +235,9 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               name="amount"
               render={({ field }) => (
                 <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Tutar</FormLabel>
+                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>Tutar</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="0.00" className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono placeholder:text-gray-400" {...field} value={field.value ?? ''} />
+                    <Input type="number" placeholder="0.00" className={`md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono placeholder:text-gray-400 ${isMobile ? 'h-14 text-lg' : 'h-10'}`} {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
@@ -240,10 +248,10 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               name="user"
               render={({ field }) => (
                 <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">İşlemi Giren</FormLabel>
+                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>İşlemi Giren</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono">
+                      <SelectTrigger className={`md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono ${isMobile ? 'h-14 text-lg' : 'h-10'}`}>
                         <SelectValue placeholder="Kim girdi?" />
                       </SelectTrigger>
                     </FormControl>
@@ -261,9 +269,9 @@ export const TransactionDialog: React.FC<TransactionDialogProps> = ({ isOpen, on
               name="description"
               render={({ field }) => (
                 <FormItem className="md:grid md:grid-cols-4 md:items-center gap-4 space-y-2 md:space-y-0">
-                  <FormLabel className="md:text-right font-mono font-bold text-gray-300">Açıklama</FormLabel>
+                  <FormLabel className={`md:text-right font-mono font-bold text-gray-300 ${isMobile ? 'text-lg' : ''}`}>Açıklama</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="İşlem açıklaması (isteğe bağlı)" className="md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono placeholder:text-gray-400" {...field} value={field.value ?? ''} />
+                    <Textarea placeholder="İşlem açıklaması (isteğe bağlı)" className={`md:col-span-3 bg-slate-600 border-gray-500 text-white font-mono placeholder:text-gray-400 ${isMobile ? 'min-h-20 text-lg' : 'min-h-10'}`} {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage className="md:col-start-2 md:col-span-3" />
                 </FormItem>
